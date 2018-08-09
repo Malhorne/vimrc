@@ -1,5 +1,4 @@
-" Used for usage of multiple vimrc
-" Clearly not required for everyone
+" Disable vi specifics commands
 set nocompatible
 " For Vundle to work correctly we need to disable it
 filetype off
