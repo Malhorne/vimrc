@@ -147,8 +147,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 inoremap jk <C-[>
 inoremap kj <C-[>
 " To learn how to use the previous shortcuts
-" This remap Escape to nothing to get the hang of the previous shortcuts
-inoremap <Esc> <nop>
 
 " I've got an Azerty keyboard and I am way too lazy to switch
 " So I made a key with + and - to navigate lines
