@@ -143,6 +143,8 @@ nnoremap <C-L> <C-W><C-L>
 let mapleader="Q"
 nnoremap <leader>ev :vsplit ~/local_work/.vimrc<CR>
 nnoremap <leader>sv :so ~/local_work/.vimrc<CR>
+nnoremap <leader>" viw<Esc>a"<Esc>bi"<Esc>lel
+nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
 
 " For the ToggleSpell function
 let g:spellOn=0
