@@ -2,6 +2,7 @@
 set nocompatible
 
 " Vundle part {{{
+
 " For Vundle to work correctly we need to disable it
 filetype off
 
@@ -43,10 +44,13 @@ call vundle#end()
 
 " Required for plugin indentation and filetype detection
 filetype plugin indent on
+
 " }}}
 
 " Main configuration {{{
+
 " Basic configuration {{{
+
 " Number of spaces that a Tab produces
 set tabstop=4
 " Number of spaces that a Tab counts for while performing editing operations
@@ -74,9 +78,11 @@ set mouse=a
 set tabpagemax=100
 " Highlight the search results
 set hlsearch
+
 " }}}
 
 " Color scheme {{{
+
 " Set syntax coloration
 syntax on
 " Set the number of color
@@ -85,11 +91,15 @@ set t_Co=256
 set background=dark
 " Set the colorscheme
 colorscheme gruvbox
+
 " }}}
+
 " }}}
 
 " Plugin configurations {{{
+
 " NERDTree configuration {{{
+
 " Ignore temp files with NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$']
 " Replacing the arrow icons in NERDTree
@@ -105,19 +115,43 @@ augroup NERDTree
     " Close vim if the only tab remaining is NERDTree
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
+
 " }}}
 
 " SympylFold configuration {{{
+
 " Configuration of SympylFold
 let g:SimpylFold_docstring_preview=1
+
 " }}}
 
 " YouCompleteMe configuration {{{
+
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
 " }}}
 
+" Airline configuration {{{
+
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
+let g:airline_section_c=''
+
+" }}}
+
+" Vimtex configuration {{{
+
+let g:vimtex_fold_enabled=1
+
+" }}}
+
+" }}}
+
+" File type configurations {{{
 " Python file settings {{{
+
 augroup filetype_python
     autocmd!
     " Make the code look pretty
@@ -125,44 +159,46 @@ augroup filetype_python
     " Fold based on indentation
     autocmd FileType python set foldmethod=indent
 augroup END
+
 " }}}
 
 " Vimscript file settings {{{
-" For vim files we use marker foldmethod
+
 augroup filetype_vim
     autocmd!
+    " For vim files we use marker foldmethod
     autocmd FileType vim setlocal foldmethod=marker
+    " Fold everything when opening a vim file
     autocmd FileType vim setlocal foldlevel=0
 augroup END
+
 " }}}
 
 " Latex file settings {{{
+
 augroup filetype_latex
     " Clean the group each time
     autocmd!
     " When editing latex file I prefer a shiftwidth of 2
     autocmd BufNewFile,BufRead *.tex set sw=2
 augroup END
+
 " }}}
 
 " Pkg file settings {{{
+
 augroup filetype_pkg
-    " Clean the group each time
     autocmd!
     " Personal use: I want sh syntax for file with .pkg extension
     autocmd BufNewFile,BufRead *.pkg set syntax=sh
 augroup END
+
 " }}}
 
-" Airline configuration {{{
-set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:airline_theme='dark'
-let g:airline_section_c=''
-" }}}
 " }}}
 
 " Custom mappings {{{
+
 " Enable folding with the spacebar
 nnoremap <space> za
 
@@ -196,7 +232,6 @@ nnoremap <C-L> <C-W><C-L>
 let mapleader="Q"
 
 " Qev open a split to edit the vimrc
-" You can use $MYVIMRC instead of the hard path
 nnoremap <leader>ev :vsplit ~/local_work/.vimrc<CR>
 
 " Qsv to source the vimrc
@@ -213,9 +248,11 @@ nnoremap <leader>" viw<Esc>a"<Esc>bi"<Esc>lel
 
 " Q' to surround the current word with simple quotes
 nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
+
 " }}}
 
 " SpellCheck custom function {{{
+
 " For the ToggleSpell function
 let g:spellOn=0
 
@@ -233,14 +270,17 @@ endfunction
 
 " Map F6 to call this previous functions
 nnoremap <F6> :call ToggleSpell()<CR>
+
 " }}}
 
 " Custom highlights {{{
+
 " Highlight the extra whitespace in red
 highlight ExtraWhitespace ctermbg=red guibg=red
 
 " Define the extra whitespace as the one at the end of line for no reason
 match ExtraWhitespace /\s\+$/
+
 " }}}
 
 " To prevent a bug with system clipboard on my computer do not mind
