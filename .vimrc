@@ -80,12 +80,6 @@ set fileformat=unix
 let python_highlight_all=1
 syntax on
 
-" When editing latex file I prefer a shiftwidth of 2
-au BufNewFile,BufRead *.tex set sw=2
-
-" Personal use: I want sh syntax for file with .pkg extension
-au BufNewFile,BufRead *.pkg set syntax=sh
-
 " UTF-8 support
 set encoding=utf-8
 
@@ -101,12 +95,30 @@ set nu
 " To know it type :version inside vim and look for +clipboard
 set clipboard=unnamed
 
+augroup latex
+    " Clean the group each time
+    au!
+    " When editing latex file I prefer a shiftwidth of 2
+    au BufNewFile,BufRead *.tex set sw=2
+augroup END
+
+augroup pkg
+    " Clean the group each time
+    au!
+    " Personal use: I want sh syntax for file with .pkg extension
+    au BufNewFile,BufRead *.pkg set syntax=sh
+augroup END
+
 " Replacing the arrow icons in NERDTree
 let g:NERDTreeDirArrowExpandable = "+"
 let g:NERDTreeDirArrowCollapsible = "-"
 
-" Close vim if the only tab remaining is NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup NERDTree
+    " Clean the group each time
+    au!
+    " Close vim if the only tab remaining is NERDTree
+    au bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 " Airline configuration
 set laststatus=2
