@@ -157,7 +157,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 " Mapping of jk and kj to Esc to prevent finger hell
 inoremap jk <C-[>
 inoremap kj <C-[>
-" To learn how to use the previous shortcuts
 
 " I've got an Azerty keyboard and I am way too lazy to switch
 " So I made a key with + and - to navigate lines
@@ -211,4 +210,6 @@ highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 
 " To prevent a bug with system clipboard on my computer do not mind
-set t_BE=
+" Commenting because it seems to be fixed in another way
+" Keeping it there just in case bad things happen
+" set t_BE=
