@@ -1,12 +1,16 @@
 " Disable vi specifics commands
 set nocompatible
+
+" Vundle settings {{{
 " For Vundle to work correctly we need to disable it
 filetype off
 
 " set the runtime path to include Vundle and initialize
 set rtp+=/home/matcha02/local_work/.vim
 set rtp+=~/local_work/.vim/bundle/Vundle.vim
+" }}}
 
+" Vundle plugins {{{
 " alternatively, pass a path where Vundle should install plugins
 call vundle#begin('~/local_work/.vim/bundle')
 
@@ -37,33 +41,9 @@ call vundle#end()
 
 " Required for plugin indentation and filetype detection
 filetype plugin indent on
+" }}}
 
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
-" Configuration of SympylFold
-let g:SimpylFold_docstring_preview=1
-
-" For YouCompleteMe
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" Python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-
-" Ignore temp files with NERDTree
-let NERDTreeIgnore=['\.pyc$', '\~$']
-
-" Enable folding with the spacebar
-nnoremap <space> za
-
+" Basic configurations {{{
 " Number of spaces that a Tab produces
 set tabstop=4
 " Number of spaces that a Tab counts for while performing editing operations
@@ -78,61 +58,12 @@ set autoindent
 set expandtab
 " Because who use Windows/MacOS ;)
 set fileformat=unix
-" Make the code look pretty
-let python_highlight_all=1
+" Set syntax coloration
 syntax on
-
 " UTF-8 support
 set encoding=utf-8
-
-" Color scheme
-set t_Co=256
-set background=dark
-colorscheme gruvbox
-
 " Line numbering
-set nu
-
-" System clipboard if your vim is compiled with it
-" To know it type :version inside vim and look for +clipboard
-set clipboard=unnamed
-
-augroup latex
-    " Clean the group each time
-    au!
-    " When editing latex file I prefer a shiftwidth of 2
-    au BufNewFile,BufRead *.tex set sw=2
-augroup END
-
-augroup pkg
-    " Clean the group each time
-    au!
-    " Personal use: I want sh syntax for file with .pkg extension
-    au BufNewFile,BufRead *.pkg set syntax=sh
-augroup END
-
-" Replacing the arrow icons in NERDTree
-let g:NERDTreeDirArrowExpandable = "+"
-let g:NERDTreeDirArrowCollapsible = "-"
-
-augroup NERDTree
-    " Clean the group each time
-    au!
-    " Close vim if the only tab remaining is NERDTree
-    au bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
-
-" Airline configuration
-set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:airline_theme='dark'
-let g:airline_section_c=''
-
-" Remap Ctrl-N to NERDTreeToggle
-nnoremap <C-n> :NERDTreeToggle<CR>
-" Remap Ctrl-P to NERDTreeFind current folder
-nnoremap <C-p> :NERDTreeFind<CR>
-
+set number
 " Set incremental search
 set incsearch
 " Allow the usage of mouse in every mode every time
@@ -142,17 +73,114 @@ set mouse=a
 set tabpagemax=100
 " Highlight the search results
 set hlsearch
+" }}}
 
+" Color scheme {{{
+set t_Co=256
+set background=dark
+colorscheme gruvbox
+" }}}
+
+" Folding {{{
+set foldmethod=indent
+set foldlevel=99
+
+" Enable folding with the spacebar
+nnoremap <space> za
+" }}}
+
+" Python with virtualenv support {{{
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+" }}}
+
+" NERDTree configuration {{{
+" Ignore temp files with NERDTree
+let NERDTreeIgnore=['\.pyc$', '\~$']
+" Replacing the arrow icons in NERDTree
+let g:NERDTreeDirArrowExpandable = "+"
+let g:NERDTreeDirArrowCollapsible = "-"
+" Remap Ctrl-N to NERDTreeToggle
+nnoremap <C-n> :NERDTreeToggle<CR>
+" Remap Ctrl-P to NERDTreeFind current folder
+nnoremap <C-p> :NERDTreeFind<CR>
+augroup NERDTree
+    " Clean the group each time
+    autocmd!
+    " Close vim if the only tab remaining is NERDTree
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+" }}}
+
+" SympylFold configuration {{{
+" Configuration of SympylFold
+let g:SimpylFold_docstring_preview=1
+" }}}
+
+" YouCompleteMe configuration {{{
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" }}}
+
+" Python file settings {{{
+augroup filetype_python
+    autocmd!
+    " Make the code look pretty
+    autocmd FileType python let python_highlight_all=1
+augroup END
+" }}}
+
+" Vimscript file settings {{{
+" For vim files we use marker foldmethod
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+" Latex file settings {{{
+augroup filetype_latex
+    " Clean the group each time
+    autocmd!
+    " When editing latex file I prefer a shiftwidth of 2
+    autocmd BufNewFile,BufRead *.tex set sw=2
+augroup END
+" }}}
+
+" Pkg file settings {{{
+augroup filetype_pkg
+    " Clean the group each time
+    autocmd!
+    " Personal use: I want sh syntax for file with .pkg extension
+    autocmd BufNewFile,BufRead *.pkg set syntax=sh
+augroup END
+" }}}
+
+" Airline configuration {{{
+set laststatus=2
+let g:airline_powerline_fonts = 1
+let g:airline_theme='dark'
+let g:airline_section_c=''
+" }}}
+
+" Custom mappings {{{
 " Remap default Enter to stop highlighting
 nnoremap <CR> :noh<CR><CR>
+
 " Remap z/ to search inside the current screen
 nnoremap <silent> z/ :set scrolloff=0<CR>VHoL<Esc>:set scrolloff=1<CR>``/\%V
+
 " Map F10 to print which is the syntax group under the cursor
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 			\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 			\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" Let's try this it could be funny
 " Mapping of jk and kj to Esc to prevent finger hell
 inoremap jk <C-[>
 inoremap kj <C-[>
@@ -170,20 +198,28 @@ nnoremap <C-L> <C-W><C-L>
 
 " Leader key to Q (because ex mode is not really useful)
 let mapleader="Q"
+
 " Qev open a split to edit the vimrc
 " You can use $MYVIMRC instead of the hard path
 nnoremap <leader>ev :vsplit ~/local_work/.vimrc<CR>
+
 " Qsv to source the vimrc
 nnoremap <leader>sv :so ~/local_work/.vimrc<CR>
+
 " Qu to lower case the current word
 nnoremap <leader>u viwu
+
 " QU to upper case the current word
 nnoremap <leader>U viwU
+
 " Q" to surround the current word with double quotes
 nnoremap <leader>" viw<Esc>a"<Esc>bi"<Esc>lel
+
 " Q' to surround the current word with simple quotes
 nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
+" }}}
 
+" SpellCheck custom function {{{
 " For the ToggleSpell function
 let g:spellOn=0
 
@@ -200,13 +236,16 @@ function! ToggleSpell()
 endfunction
 
 " Map F6 to call this previous functions
-map <F6> :call ToggleSpell()<CR>
+nnoremap <F6> :call ToggleSpell()<CR>
+" }}}
 
+" Custom highlights {{{
 " Highlight the extra whitespace in red
 highlight ExtraWhitespace ctermbg=red guibg=red
 
 " Define the extra whitespace as the one at the end of line for no reason
 match ExtraWhitespace /\s\+$/
+" }}}
 
 " To prevent a bug with system clipboard on my computer do not mind
 " Commenting because it seems to be fixed in another way
