@@ -13,8 +13,7 @@ call vundle#begin('~/local_work/.vim/bundle')
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-" Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
-" Plugin for Pythong fold
+" Plugin for Python fold
 Plugin 'tmhedberg/SimpylFold'
 " Plugin to indent Python
 Plugin 'vim-scripts/indentpython.vim'
@@ -30,6 +29,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 " Plugin to highlight word occurences
 Plugin 'RRethy/vim-illuminate'
+" Plugin for Latex
+" TODO: Setup this plugin
+Plugin 'lervag/vimtex'
 " All of your Plugins must be added before the following line
 call vundle#end()
 
@@ -127,7 +129,7 @@ let g:airline_theme='dark'
 let g:airline_section_c=''
 
 " Remap Ctrl-N to NERDTreeToggle
-nnoremap <C-n> :NERDTreeToogle<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
 " Remap Ctrl-P to NERDTreeFind current folder
 nnoremap <C-p> :NERDTreeFind<CR>
 
@@ -135,9 +137,6 @@ nnoremap <C-p> :NERDTreeFind<CR>
 set incsearch
 " Allow the usage of mouse in every mode every time
 set mouse=a
-
-" Set the tex_flavor to latex. Used for an internal plugin not described in this file
-let g:tex_flavor='latex'
 
 " Maximum number of tabs to be safe
 set tabpagemax=100
