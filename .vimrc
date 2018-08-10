@@ -1,22 +1,23 @@
 " Disable vi specifics commands
 set nocompatible
 
-" Vundle settings {{{
+" Vundle part {{{
 " For Vundle to work correctly we need to disable it
 filetype off
 
+" Vundle settings {{{
 " set the runtime path to include Vundle and initialize
 set rtp+=/home/matcha02/local_work/.vim
 set rtp+=~/local_work/.vim/bundle/Vundle.vim
-" }}}
 
-" Vundle plugins {{{
 " alternatively, pass a path where Vundle should install plugins
 call vundle#begin('~/local_work/.vim/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
+" }}}
 
+" Vundle plugins {{{
 " Plugin for Python fold
 Plugin 'tmhedberg/SimpylFold'
 " Plugin to indent Python
@@ -38,12 +39,14 @@ Plugin 'RRethy/vim-illuminate'
 Plugin 'lervag/vimtex'
 " All of your Plugins must be added before the following line
 call vundle#end()
+" }}}
 
 " Required for plugin indentation and filetype detection
 filetype plugin indent on
 " }}}
 
-" Basic configurations {{{
+" Main configuration {{{
+" Basic configuration {{{
 " Number of spaces that a Tab produces
 set tabstop=4
 " Number of spaces that a Tab counts for while performing editing operations
@@ -58,8 +61,6 @@ set autoindent
 set expandtab
 " Because who use Windows/MacOS ;)
 set fileformat=unix
-" Set syntax coloration
-syntax on
 " UTF-8 support
 set encoding=utf-8
 " Line numbering
@@ -76,30 +77,18 @@ set hlsearch
 " }}}
 
 " Color scheme {{{
+" Set syntax coloration
+syntax on
+" Set the number of color
 set t_Co=256
+" Set the background color
 set background=dark
+" Set the colorscheme
 colorscheme gruvbox
 " }}}
-
-" Folding {{{
-set foldmethod=indent
-set foldlevel=99
-
-" Enable folding with the spacebar
-nnoremap <space> za
 " }}}
 
-" Python with virtualenv support {{{
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-" }}}
-
+" Plugin configurations {{{
 " NERDTree configuration {{{
 " Ignore temp files with NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$']
@@ -133,6 +122,8 @@ augroup filetype_python
     autocmd!
     " Make the code look pretty
     autocmd FileType python let python_highlight_all=1
+    " Fold based on indentation
+    autocmd FileType python set foldmethod=indent
 augroup END
 " }}}
 
@@ -141,6 +132,7 @@ augroup END
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+    autocmd FileType vim setlocal foldlevel=0
 augroup END
 " }}}
 
@@ -168,8 +160,12 @@ let g:airline_powerline_fonts = 1
 let g:airline_theme='dark'
 let g:airline_section_c=''
 " }}}
+" }}}
 
 " Custom mappings {{{
+" Enable folding with the spacebar
+nnoremap <space> za
+
 " Remap default Enter to stop highlighting
 nnoremap <CR> :noh<CR><CR>
 
@@ -240,11 +236,11 @@ nnoremap <F6> :call ToggleSpell()<CR>
 " }}}
 
 " Custom highlights {{{
-" Highlight the extra whitespace in red
-highlight ExtraWhitespace ctermbg=red guibg=red
-
 " Define the extra whitespace as the one at the end of line for no reason
 match ExtraWhitespace /\s\+$/
+
+" Highlight the extra whitespace in red
+highlight ExtraWhitespace ctermbg=red guibg=red
 " }}}
 
 " To prevent a bug with system clipboard on my computer do not mind
