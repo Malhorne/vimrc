@@ -236,11 +236,11 @@ nnoremap <F6> :call ToggleSpell()<CR>
 " }}}
 
 " Custom highlights {{{
-" Define the extra whitespace as the one at the end of line for no reason
-match ExtraWhitespace /\s\+$/
-
 " Highlight the extra whitespace in red
 highlight ExtraWhitespace ctermbg=red guibg=red
+
+" Define the extra whitespace as the one at the end of line for no reason
+match ExtraWhitespace /\s\+$/
 " }}}
 
 " To prevent a bug with system clipboard on my computer do not mind
