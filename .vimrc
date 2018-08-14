@@ -253,7 +253,7 @@ nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
 nnoremap <leader>; mWA;<Esc>`W
 
 " Mapping to grep -R current word
-nnoremap <leader>g :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen<cr>
+nnoremap <leader>g :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen 12<cr>
 " }}}
 
 " SpellCheck custom function {{{
