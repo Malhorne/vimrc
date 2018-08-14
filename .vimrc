@@ -249,6 +249,11 @@ nnoremap <leader>" viw<Esc>a"<Esc>bi"<Esc>lel
 " Q' to surround the current word with simple quotes
 nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
 
+" Mapping to add a semi-colon at the end of a line
+nnoremap <leader>; mWA;<Esc>`W
+
+" Mapping to grep -R current word
+nnoremap <leader>g :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen<cr>
 " }}}
 
 " SpellCheck custom function {{{
@@ -286,4 +291,4 @@ match ExtraWhitespace /\s\+$/
 " To prevent a bug with system clipboard on my computer do not mind
 " Commenting because it seems to be fixed in another way
 " Keeping it there just in case bad things happen
-" set t_BE=
+set t_BE=
