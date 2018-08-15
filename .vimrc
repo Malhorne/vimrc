@@ -8,11 +8,11 @@ filetype off
 
 " Vundle settings {{{
 " set the runtime path to include Vundle and initialize
-set rtp+=/home/matcha02/local_work/.vim
-set rtp+=~/local_work/.vim/bundle/Vundle.vim
+set rtp+=/home/malhorne/.vim
+set rtp+=~/.vim/bundle/Vundle.vim
 
 " alternatively, pass a path where Vundle should install plugins
-call vundle#begin('~/local_work/.vim/bundle')
+call vundle#begin('~/.vim/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -129,6 +129,7 @@ let g:SimpylFold_docstring_preview=1
 
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_server_python_interpreter = "/usr/bin/python2"
 
 " }}}
 
@@ -232,10 +233,10 @@ nnoremap <C-L> <C-W><C-L>
 let mapleader="Q"
 
 " Qev open a split to edit the vimrc
-nnoremap <leader>ev :vsplit ~/local_work/.vimrc<CR>
+nnoremap <leader>ev :vsplit ~/.vimrc<CR>
 
 " Qsv to source the vimrc
-nnoremap <leader>sv :so ~/local_work/.vimrc<CR>
+nnoremap <leader>sv :so ~/.vimrc<CR>
 
 " Qu to lower case the current word
 nnoremap <leader>u viwu
