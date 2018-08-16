@@ -252,8 +252,44 @@ nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
 " Mapping to add a semi-colon at the end of a line
 nnoremap <leader>; mWA;<Esc>`W
 
-" Mapping to grep -R current word
-nnoremap <leader>g :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen 12<cr>
+" }}}
+
+" Grep custom functions {{{
+
+" Mapping to grep -R current WORD under cursor
+nnoremap <leader>G :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen 12<cr>
+
+" Operator to grep -R in visual and normal mode
+nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
+vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
+
+function! s:GrepOperator(type)
+    " Save the value of the register prior to the function execution
+    let save_unnamed_register = @@
+
+    " If it is a visual mode (not block nor line visual)
+    if a:type ==# 'v'
+        normal! `<v`>y
+    " If it is a normal motion
+    elseif a:type ==# 'char'
+        normal! `[v`]y
+    " Otherwise we do not treat it
+    else
+        return
+    endif
+
+    " Execute the grep -R -I with the escape of the considered string
+    silent execute "grep! -R -I " . shellescape(@@) . " ."
+    " To prevent the silent bug
+    redraw!
+    " Open the quickfix window
+    copen
+
+    " Restore the register
+    let @@ = save_unnamed_register
+endfunction
+
+
 " }}}
 
 " SpellCheck custom function {{{
