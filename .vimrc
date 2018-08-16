@@ -202,9 +202,6 @@ augroup END
 " Enable folding with the spacebar
 nnoremap <space> za
 
-" Remap default Enter to stop highlighting
-nnoremap <CR> :noh<CR><CR>
-
 " Remap z/ to search inside the current screen
 nnoremap <silent> z/ :set scrolloff=0<CR>VHoL<Esc>:set scrolloff=1<CR>``/\%V
 
@@ -254,6 +251,23 @@ nnoremap <leader>; mWA;<Esc>`W
 
 " }}}
 
+" Highlight using Enter function {{{
+let g:highlightOn = 0
+
+nnoremap <CR> :call <SID>ToggleHighlight()<CR>
+
+function! s:ToggleHighlight()
+    if g:highlightOn ==# 0
+        let g:highlightOn = 1
+        let @/='\<'.expand("<cword>").'\>'
+    else
+        let g:highlightOn = 0
+        let &hlsearch = 0
+    endif
+endfunction
+
+" }}}
+
 " Grep custom functions {{{
 
 " Mapping to grep -R current WORD under cursor
@@ -298,7 +312,7 @@ endfunction
 let g:spellOn=0
 
 " Used to toggle spellchecking and highlight ill spelled words
-function! ToggleSpell()
+function! s:ToggleSpell()
   if g:spellOn == 0
 	setlocal spell
 	highlight SpellBad ctermbg=red guibg=red
@@ -310,7 +324,7 @@ function! ToggleSpell()
 endfunction
 
 " Map F6 to call this previous functions
-nnoremap <F6> :call ToggleSpell()<CR>
+nnoremap <F6> :call <SID>ToggleSpell()<CR>
 
 " }}}
 
