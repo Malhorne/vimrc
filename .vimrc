@@ -19,6 +19,7 @@ Plugin 'gmarik/Vundle.vim'
 " }}}
 
 " Vundle plugins {{{
+
 " Plugin for Python fold
 Plugin 'tmhedberg/SimpylFold'
 " Plugin to indent Python
@@ -40,6 +41,7 @@ Plugin 'RRethy/vim-illuminate'
 Plugin 'lervag/vimtex'
 " All of your Plugins must be added before the following line
 call vundle#end()
+
 " }}}
 
 " Required for plugin indentation and filetype detection
@@ -158,6 +160,8 @@ augroup filetype_python
     autocmd FileType python let python_highlight_all=1
     " Fold based on indentation
     autocmd FileType python set foldmethod=indent
+    " Fold everything when opening a Python file
+    autocmd FileType vim setlocal foldlevel=0
 augroup END
 
 " }}}
@@ -166,9 +170,9 @@ augroup END
 
 augroup filetype_vim
     autocmd!
-    " For vim files we use marker foldmethod
+    " For Vim files we use marker foldmethod
     autocmd FileType vim setlocal foldmethod=marker
-    " Fold everything when opening a vim file
+    " Fold everything when opening a Vim file
     autocmd FileType vim setlocal foldlevel=0
 augroup END
 
@@ -179,7 +183,7 @@ augroup END
 augroup filetype_latex
     " Clean the group each time
     autocmd!
-    " When editing latex file I prefer a shiftwidth of 2
+    " When editing Latex file I prefer a shiftwidth of 2
     autocmd BufNewFile,BufRead *.tex set sw=2
 augroup END
 
@@ -309,17 +313,17 @@ endfunction
 " SpellCheck custom function {{{
 
 " For the ToggleSpell function
-let g:spellOn=0
+let g:spellOn = 0
 
 " Used to toggle spellchecking and highlight ill spelled words
 function! s:ToggleSpell()
   if g:spellOn == 0
 	setlocal spell
 	highlight SpellBad ctermbg=red guibg=red
-	let g:spellOn=1
+	let g:spellOn = 1
   else
 	setlocal nospell
-	let g:spellOn=0
+	let g:spellOn = 0
   endif
 endfunction
 
