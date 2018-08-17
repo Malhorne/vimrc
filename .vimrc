@@ -39,6 +39,9 @@ Plugin 'RRethy/vim-illuminate'
 " Plugin for Latex
 " TODO: Setup this plugin
 Plugin 'lervag/vimtex'
+" Plugin used for alignment
+Plugin 'tommcdo/vim-lion'
+
 " All of your Plugins must be added before the following line
 call vundle#end()
 
@@ -140,6 +143,7 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='dark'
 let g:airline_section_c=''
+let g:airline#extensions#tabline#enabled = 1
 
 " }}}
 
@@ -253,22 +257,8 @@ nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
 " Mapping to add a semi-colon at the end of a line
 nnoremap <leader>; mWA;<Esc>`W
 
-" }}}
-
-" Highlight using Enter function {{{
-let g:highlightOn = 0
-
-nnoremap <CR> :call <SID>ToggleHighlight()<CR>
-
-function! s:ToggleHighlight()
-    if g:highlightOn ==# 0
-        let g:highlightOn = 1
-        let @/='\<'.expand("<cword>").'\>'
-    else
-        let g:highlightOn = 0
-        let &hlsearch = 0
-    endif
-endfunction
+" To stop highlighting with Enter
+nnoremap <CR> :noh<CR><CR>
 
 " }}}
 
