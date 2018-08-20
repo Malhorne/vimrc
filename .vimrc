@@ -85,6 +85,8 @@ set mouse=a
 set tabpagemax=100
 " Highlight the search results
 set hlsearch
+" Wildmenu for command completion
+set wildmenu
 
 " }}}
 
