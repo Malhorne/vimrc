@@ -41,6 +41,8 @@ Plugin 'RRethy/vim-illuminate'
 Plugin 'lervag/vimtex'
 " Plugin used for alignment
 Plugin 'tommcdo/vim-lion'
+" Plugin for Python checking
+Plugin 'nvie/vim-flake8'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
@@ -134,6 +136,7 @@ let g:SimpylFold_docstring_preview=1
 
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_server_python_interpreter = "/usr/bin/python2"
 
 " }}}
 
@@ -142,7 +145,6 @@ map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme='dark'
-let g:airline_section_c=''
 let g:airline#extensions#tabline#enabled = 1
 
 " }}}
@@ -307,7 +309,7 @@ let g:spellOn = 0
 
 " Used to toggle spellchecking and highlight ill spelled words
 function! s:ToggleSpell()
-  if g:spellOn == 0
+  if g:spellOn ==# 0
 	setlocal spell
 	highlight SpellBad ctermbg=red guibg=red
 	let g:spellOn = 1
@@ -333,6 +335,4 @@ match ExtraWhitespace /\s\+$/
 " }}}
 
 " To prevent a bug with system clipboard on my computer do not mind
-" Commenting because it seems to be fixed in another way
-" Keeping it there just in case bad things happen
 set t_BE=
