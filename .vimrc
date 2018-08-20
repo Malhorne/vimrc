@@ -267,7 +267,7 @@ nnoremap <CR> :noh<CR><CR>
 " Grep custom functions {{{
 
 " Mapping to grep -R current WORD under cursor
-nnoremap <leader>G :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen 12<cr>
+nnoremap <leader>G :silent execute "grep! -R -I " . shellescape(expand("<cWORD>")) . " ."<cr>:redr!<cr>:copen 10<cr>
 
 " Operator to grep -R in visual and normal mode
 nnoremap <leader>g :set operatorfunc=<SID>GrepOperator<cr>g@
@@ -293,7 +293,7 @@ function! s:GrepOperator(type)
     " To prevent the silent bug
     redraw!
     " Open the quickfix window
-    copen
+    copen 10
 
     " Restore the register
     let @@ = save_unnamed_register
