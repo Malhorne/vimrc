@@ -43,6 +43,8 @@ Plugin 'lervag/vimtex'
 Plugin 'tommcdo/vim-lion'
 " Plugin for Python checking
 Plugin 'nvie/vim-flake8'
+" Plugin to ease commenting
+Plugin 'tpope/vim-commentary'
 
 " All of your Plugins must be added before the following line
 call vundle#end()
