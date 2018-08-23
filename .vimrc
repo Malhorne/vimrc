@@ -90,6 +90,8 @@ set hlsearch
 " Wildmenu for command completion
 set wildmenu
 
+" Set the split vertical character
+set fillchars=vert:\|
 " }}}
 
 " Color scheme {{{
@@ -265,6 +267,11 @@ nnoremap <leader>; mWA;<Esc>`W
 
 " To stop highlighting with Enter
 nnoremap <CR> :noh<CR><CR>
+
+" Test for entire document
+" This is supposed to be a motion concerning the inner document (understand
+" all the document)
+onoremap <silent> id :<C-U>normal! ggVG<CR>
 
 " }}}
 
