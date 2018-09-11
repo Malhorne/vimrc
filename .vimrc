@@ -8,11 +8,10 @@ filetype off
 
 " Vundle settings {{{
 " set the runtime path to include Vundle and initialize
-set rtp+=/home/matcha02/local_work/.vim
-set rtp+=~/local_work/.vim/bundle/Vundle.vim
+set rtp+=~/.vim/bundle/Vundle.vim
 
 " alternatively, pass a path where Vundle should install plugins
-call vundle#begin('~/local_work/.vim/bundle')
+call vundle#begin('~/.vim/bundle')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
