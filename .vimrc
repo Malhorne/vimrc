@@ -273,6 +273,7 @@ nnoremap <CR> :noh<CR><CR>
 " all the document)
 onoremap <silent> id :<C-U>normal! ggVG<CR>
 
+" Use Tab and Shift-Tab to move between buffers
 nnoremap <Tab> :bn<CR>
 nnoremap <S-Tab> :bp<CR>
 
