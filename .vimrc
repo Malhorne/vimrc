@@ -241,13 +241,14 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 
 " Leader key to Q (because ex mode is not really useful)
+nnoremap Q <nop>
 let mapleader="Q"
 
 " Qev open a split to edit the vimrc
-nnoremap <leader>ev :vsplit ~/local_work/.vimrc<CR>
+nnoremap <leader>ev :vsplit ~/.vimrc<CR>
 
 " Qsv to source the vimrc
-nnoremap <leader>sv :so ~/local_work/.vimrc<CR>
+nnoremap <leader>sv :so ~/.vimrc<CR>
 
 " Qu to lower case the current word
 nnoremap <leader>u viwu
@@ -271,6 +272,13 @@ nnoremap <CR> :noh<CR><CR>
 " This is supposed to be a motion concerning the inner document (understand
 " all the document)
 onoremap <silent> id :<C-U>normal! ggVG<CR>
+
+nnoremap <Tab> :bn<CR>
+nnoremap <S-Tab> :bp<CR>
+
+" Little test for long lines
+nnoremap j gj
+nnoremap k gk
 
 " }}}
 
