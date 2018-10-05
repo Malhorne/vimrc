@@ -281,6 +281,9 @@ nnoremap <S-Tab> :bp<CR>
 nnoremap j gj
 nnoremap k gk
 
+" Like <C-r><C-> for the current line
+cnoremap <C-R><C-L> <C-R>=getline('.')<CR>
+
 " }}}
 
 " Grep custom functions {{{
