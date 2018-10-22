@@ -303,7 +303,7 @@ vnoremap <leader>g :<c-u>call <SID>GrepOperator(visualmode())<cr>
 
 function! s:GrepOperator(type)
     " Save the value of the register prior to the function execution
-    let save_unnamed_register = @@
+    let l:save_unnamed_register = @@
 
     " If it is a visual mode (not block nor line visual)
     if a:type ==# 'v'
@@ -321,10 +321,10 @@ function! s:GrepOperator(type)
     " To prevent the silent bug
     redraw!
     " Open the quickfix window
-    copen 10
+    copen 12
 
     " Restore the register
-    let @@ = save_unnamed_register
+    let @@ = l:save_unnamed_register
 endfunction
 
 
