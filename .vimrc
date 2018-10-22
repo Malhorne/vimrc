@@ -91,6 +91,9 @@ set wildmenu
 
 " Set the split vertical character
 set fillchars=vert:\|
+
+" This seems more natural to me
+set splitright
 " }}}
 
 " Color scheme {{{
@@ -264,6 +267,9 @@ nnoremap <leader>' viw<Esc>a'<Esc>bi'<Esc>lel
 
 " Mapping to add a semi-colon at the end of a line
 nnoremap <leader>; mWA;<Esc>`W
+
+" Mapping to open a split with exploration
+nnoremap <leader>S :Sexplore<CR>
 
 " To stop highlighting with Enter
 nnoremap <CR> :noh<CR><CR>
