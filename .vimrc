@@ -1,57 +1,81 @@
 " Disable vi specifics commands
 set nocompatible
 
-" Vundle part {{{
+" VimPlug part {{{
 
-" For Vundle to work correctly we need to disable it
-filetype off
+" VimPlug settings {{{
 
-" Vundle settings {{{
-" set the runtime path to include Vundle and initialize
-set rtp+=/home/matcha02/.vim/bundle/Vundle.vim
+" Path where VimPlug should install plugins
+call plug#begin('~/.vim/vimplug')
 
-" alternatively, pass a path where Vundle should install plugins
-call vundle#begin('~/.vim/bundle')
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
 " }}}
 
-" Vundle plugins {{{
+" VimPlug plugins {{{
 
 " Plugin for Python fold
-Plugin 'tmhedberg/SimpylFold'
+Plug 'tmhedberg/SimpylFold',         { 'for': 'python' }
+
 " Plugin to indent Python
-Plugin 'vim-scripts/indentpython.vim'
+Plug 'vim-scripts/indentpython.vim', { 'for': 'python' }
+
+" Plugin to properly highlight Python
+Plug 'vim-python/python-syntax',     { 'for': 'python' }
+
+" Plugin to Lint code
+Plug 'w0rp/ale'
+
 " Completion plugin /!\ Needs to be manually built
-Plugin 'Valloric/YouCompleteMe'
-" Plugin to do syntax analysis
-Plugin 'scrooloose/syntastic'
-" Great colorscheme
-Plugin 'morhetz/gruvbox'
+Plug 'Valloric/YouCompleteMe'
+
+" Great colorschemes
+Plug 'morhetz/gruvbox'
+
 " File Explorer Plugin
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree',          { 'on': 'NERDTreeToggle' }
+
 " Bottom bar plugin
-Plugin 'vim-airline/vim-airline'
+Plug 'itchyny/lightline.vim'
+
+" Buffer tab extension to lightline
+Plug 'mengelbrecht/lightline-bufferline'
+
 " Plugin to highlight word occurences
-Plugin 'RRethy/vim-illuminate'
+Plug 'RRethy/vim-illuminate'
+
 " Plugin for Latex
 " TODO: Setup this plugin
-Plugin 'lervag/vimtex'
+" Plug 'lervag/vimtex'
+
 " Plugin used for alignment
-Plugin 'tommcdo/vim-lion'
+Plug 'tommcdo/vim-lion'
+
 " Plugin for Python checking
-Plugin 'nvie/vim-flake8'
+Plug 'nvie/vim-flake8',              { 'for': 'python' }
+
 " Plugin to ease commenting
-Plugin 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
+
+" Plugin to see letters for motions
+Plug 'unblevable/quick-scope'
+
+" Plugin to allow presentation in Vim
+Plug 'tybenz/vimdeck'
+
+" Plugin to highlight markdown
+Plug 'tpope/vim-markdown'
+
+" Plugin dependency for vimdeck, filetype syntax per region
+Plug 'vim-scripts/SyntaxRange'
+
+" Plugin to edit Firefox text area
+" Plug 'pandysong/ghost-text.vim'
 
 " All of your Plugins must be added before the following line
-call vundle#end()
+call plug#end()
 
 " }}}
 
 " Required for plugin indentation and filetype detection
-filetype plugin indent on
 
 " }}}
 
@@ -59,6 +83,8 @@ filetype plugin indent on
 
 " Basic configuration {{{
 
+" Basic configurations (automatically done by VimPlug but whatever)
+filetype plugin indent on
 " Number of spaces that a Tab produces
 set tabstop=4
 " Number of spaces that a Tab counts for while performing editing operations
@@ -81,6 +107,8 @@ set number
 set incsearch
 " Allow the usage of mouse in every mode every time
 set mouse=a
+" Scrolloff to never be in the last or first line
+set scrolloff=5
 
 " Maximum number of tabs to be safe
 set tabpagemax=100
@@ -88,6 +116,8 @@ set tabpagemax=100
 set hlsearch
 " Wildmenu for command completion
 set wildmenu
+" Show incomplete command
+set showcmd
 
 " Set the split vertical character
 set fillchars=vert:\|
@@ -98,7 +128,7 @@ set splitright
 
 " Color scheme {{{
 
-" Set syntax coloration
+" Set syntax coloration (automatically done by VimPlug but whatever)
 syntax on
 " Set the number of color
 set t_Co=256
@@ -106,7 +136,25 @@ set t_Co=256
 set background=dark
 " Set the colorscheme
 colorscheme gruvbox
+" Set the terminal colors
+set termguicolors
+" Set the contrast
+let g:gruvbox_contrast_dark = 'medium'
 
+" }}}
+
+" Terminal configuration {{{
+tnoremap jk <C-\><C-N>
+tnoremap kj <C-\><C-N>
+let g:terminal_scrollback_buffer_size = -1
+
+if has('nvim')
+    augroup TermConfig
+        autocmd!
+        " Disable scrollback for terminal
+        autocmd TermOpen * setlocal scrolloff=0
+    augroup END
+endif
 " }}}
 
 " }}}
@@ -117,13 +165,16 @@ colorscheme gruvbox
 
 " Ignore temp files with NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$']
+
 " Replacing the arrow icons in NERDTree
 let g:NERDTreeDirArrowExpandable = "+"
 let g:NERDTreeDirArrowCollapsible = "-"
+
 " Remap Ctrl-N to NERDTreeToggle
-nnoremap <C-n> :NERDTreeToggle<CR>
-" Remap Ctrl-P to NERDTreeFind current folder
-nnoremap <C-p> :NERDTreeFind<CR>
+nnoremap <C-N> :NERDTreeToggle<CR>
+" Remap Ctrl-O to NERDTreeFind current folder
+nnoremap <C-P> :NERDTreeFind<CR>
+
 augroup NERDTree
     " Clean the group each time
     autocmd!
@@ -135,8 +186,8 @@ augroup END
 
 " SympylFold configuration {{{
 
-" Configuration of SympylFold
-let g:SimpylFold_docstring_preview=1
+" Preview docstring in fold text
+let g:SimpylFold_docstring_preview = 1
 
 " }}}
 
@@ -146,14 +197,34 @@ let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ycm_server_python_interpreter = "/usr/bin/python2"
 
+" Clang static analyzer
+let g:ycm_use_clangd = "Always"
+let g:ycm_clangd_binary_path = "~/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/clangd"
+
 " }}}
 
-" Airline configuration {{{
+" Lightline configuration {{{
 
+" Always display the status bar
 set laststatus=2
-let g:airline_powerline_fonts = 1
-let g:airline_theme='dark'
-let g:airline#extensions#tabline#enabled = 1
+" Force to show the tabline
+set showtabline=2
+" Disable the basic Vim mode display
+" It is already done by the plugin
+set noshowmode
+" Set the status line colorscheme
+let g:lightline = {
+            \'colorscheme': 'wombat',
+            \}
+
+" Lightline-Bufferline configuration
+" let g:lightline#bufferline#show_number  = 1
+" let g:lightline#bufferline#shorten_path = 0
+let g:lightline#bufferline#unnamed      = '[No Name]'
+
+let g:lightline.tabline          = {'left': [['buffers']], 'right': [['close']]}
+let g:lightline.component_expand = {'buffers': 'lightline#bufferline#buffers'}
+let g:lightline.component_type   = {'buffers': 'tabsel'}
 
 " }}}
 
@@ -163,19 +234,39 @@ let g:vimtex_fold_enabled=1
 
 " }}}
 
+" ALE configuration {{{
+
+" Customize the ALE message output format
+let g:ale_echo_msg_error_str   = 'E'
+let g:ale_echo_msg_warning_str = 'F'
+" let g:ale_echo_msg_format      = '[%linter%] %s [%severity%]'
+
+let g:ale_cpp_clangd_executable = "~/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/clangd"
+let g:ale_cpp_clang_executable = "~/clang+llvm-7.0.1-x86_64-linux-gnu-ubuntu-16.04/bin/clang++"
+let g:ale_cpp_clang_options = '-std=c++17 -Wall -stdlib=libc++'
+
+" To navigate between the errors/warnings
+" nnoremap <silent> <C-K> <Plug>(ale_previous_wrap)
+" nnoremap <silent> <C-J> <Plug>(ale_next_wrap)
+
+" }}}
+
 " }}}
 
 " File type configurations {{{
+
 " Python file settings {{{
 
 augroup filetype_python
     autocmd!
     " Make the code look pretty
-    autocmd FileType python let python_highlight_all=1
+    let g:python_highlight_all=1
     " Fold based on indentation
     autocmd FileType python set foldmethod=indent
     " Fold everything when opening a Python file
-    autocmd FileType vim setlocal foldlevel=0
+    autocmd FileType python setlocal foldlevel=0
+    " Abbreviation to import pdb
+    iabbrev pdb import pdb; pdb.set_trace()
 augroup END
 
 " }}}
@@ -211,6 +302,11 @@ augroup filetype_pkg
     autocmd BufNewFile,BufRead *.pkg set syntax=sh
 augroup END
 
+" }}}
+
+" Mds file settins {{{
+let g:MIDAS_UseFolding = 1
+let g:MIDAS_UseCompletion = 0
 " }}}
 
 " }}}
@@ -270,6 +366,7 @@ nnoremap <leader>; mWA;<Esc>`W
 
 " Mapping to open a split with exploration
 nnoremap <leader>S :Sexplore<CR>
+nnoremap <leader>V :Vexplore<CR>
 
 " To stop highlighting with Enter
 nnoremap <CR> :noh<CR><CR>
@@ -289,6 +386,14 @@ nnoremap k gk
 
 " Like <C-r><C-> for the current line
 cnoremap <C-R><C-L> <C-R>=getline('.')<CR>
+
+" Remap <C-c> to remove the buffer from the list without closing the split
+nnoremap <C-C> :bp<CR>:bd #<CR>
+
+" Remap <C-W> to open a terminal in a new buffer
+if has('nvim')
+    nnoremap <C-W>t :tabe term://zsh<CR>
+endif
 
 " }}}
 
@@ -349,16 +454,6 @@ endfunction
 
 " Map F6 to call this previous functions
 nnoremap <F6> :call <SID>ToggleSpell()<CR>
-
-" }}}
-
-" Custom highlights {{{
-
-" Highlight the extra whitespace in red
-highlight ExtraWhitespace ctermbg=red guibg=red
-
-" Define the extra whitespace as the one at the end of line for no reason
-match ExtraWhitespace /\s\+$/
 
 " }}}
 
